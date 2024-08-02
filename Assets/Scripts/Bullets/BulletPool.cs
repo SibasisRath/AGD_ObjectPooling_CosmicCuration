@@ -7,6 +7,8 @@ namespace CosmicCuration.Bullets
     // 1. Create class of pooled bullet
     // 2. Create this pool via player service
     // 3. Create a constructor of pool
+    // 4. Get a constructor from pool
+    // 5. Return a constructor to pool
     public class BulletPool
     {
         private BulletView bulletView;
