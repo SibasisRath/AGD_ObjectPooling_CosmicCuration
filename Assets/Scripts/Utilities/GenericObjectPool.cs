@@ -37,6 +37,12 @@ namespace CosmicCuration.Utilities
             throw new NotImplementedException();
         }
 
+        public void ReturnItem(T item)
+        {
+            PooledItem<T> itemToBeReturned = pooledItems.Find(item => item.item.Equals(item));
+            itemToBeReturned.isUsed = false;
+        }
+
         public class PooledItem<T>
         {
             public T item;
