@@ -7,7 +7,6 @@ namespace CosmicCuration.Enemy
     public class EnemyService
     {
         #region Dependencies
-        private EnemyView enemyPrefab;
         private EnemyScriptableObject enemyScriptableObject;
         private EnemyPool enemyPool;
         #endregion
@@ -21,8 +20,8 @@ namespace CosmicCuration.Enemy
         #region Initialization
         public EnemyService(EnemyView enemyPrefab, EnemyScriptableObject enemyScriptableObject)
         {
-            this.enemyPrefab = enemyPrefab;
             this.enemyScriptableObject = enemyScriptableObject;
+            enemyPool = new EnemyPool(enemyScriptableObject, enemyPrefab);
             InitializeVariables();
         }
 
@@ -31,7 +30,6 @@ namespace CosmicCuration.Enemy
             isSpawning = true;
             currentSpawnRate = enemyScriptableObject.initialSpawnRate;
             spawnTimer = currentSpawnRate;
-            enemyPool = new EnemyPool(enemyScriptableObject, enemyPrefab);
         } 
         #endregion
 
@@ -110,10 +108,8 @@ namespace CosmicCuration.Enemy
 
         private void ResetSpawnTimer() => spawnTimer = currentSpawnRate;
 
-        public void ReturnEnemyToPool(EnemyController enemyController) 
-        {
-            enemyPool.ReturnEnemyController(enemyController);
-        }
+        public void ReturnEnemyToPool(EnemyController enemyController) => enemyPool.ReturnEnemyController(enemyController);
+
 
         public void SetEnemySpawning(bool setActive) => isSpawning = setActive;
     }

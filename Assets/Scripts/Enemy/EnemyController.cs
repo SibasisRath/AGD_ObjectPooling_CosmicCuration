@@ -36,6 +36,7 @@ namespace CosmicCuration.Enemy
             currentHealth = enemyData.maxHealth;
             speed = Random.Range(enemyData.minimumSpeed, enemyData.maximumSpeed);
             movementTimer = enemyData.movementDuration;
+            enemyView.gameObject.SetActive(true);
         }
 
         private void SetEnemyOrientation(EnemyOrientation orientation)
