@@ -13,24 +13,24 @@ namespace CosmicCuration.PowerUps
         public PowerUpController GetPowerUp<T>(PowerUpData powerUpData) where T: PowerUpController
         {
             this.powerUpData = powerUpData;
-            return GetItem<PowerUpController>();
+            return GetItem<T>();
         }
 
         protected override PowerUpController CreateItem<T>()
         {
             if (typeof(T) == typeof(Shield))
             {
-                return base.CreateItem<Shield>();
+                return new Shield(this.powerUpData);
             }
 
             else if (typeof(T) == typeof(DoubleTurret))
             {
-                return base.CreateItem<DoubleTurret>();
+                return new DoubleTurret(this.powerUpData);
             }
 
             else if (typeof(T) == typeof(RapidFire))
             {
-                return base.CreateItem<RapidFire>();
+                return new RapidFire(this.powerUpData);
             }
             else
             {
