@@ -1,20 +1,56 @@
+using CosmicCuration.Bullets;
 using CosmicCuration.Utilities;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace CosmicCuration.Enemy
 {
     public class EnemyPool : GenericObjectPool<EnemyController>
     {
-        private EnemyView enemyPrefab;
-        private EnemyData enemyData;
+        private EnemyScriptableObject scriptableObject;
+        private EnemyView enemyView;
 
-        public EnemyPool(EnemyView enemyPrefab, EnemyData enemyData)
-        {
-            this.enemyPrefab = enemyPrefab;
-            this.enemyData = enemyData;
+        private List<PooledEnemy> enemys = new();
+
+        public EnemyPool(EnemyScriptableObject enemyScriptableObject, EnemyView enemyView) {
+            this.scriptableObject = enemyScriptableObject;
+            this.enemyView = enemyView;
         }
 
-        public EnemyController GetEnemy() => GetItem<EnemyController>();
+        public class PooledEnemy
+        {
+            public bool isUsed;
+            public EnemyController enemyController;
+        }
 
-        protected override EnemyController CreateItem<T>() => new EnemyController(enemyPrefab, enemyData);
+        public EnemyController GetEnemyController() 
+        {
+            if (enemys.Count > 0)
+            {
+                PooledEnemy enemy = enemys.Find(item => !item.isUsed);
+                if (enemy != null) 
+                {
+                    enemy.isUsed = true;
+                    return enemy.enemyController;
+                }
+            }
+            return CreatePooledEnemy();
+        }
+        public void ReturnEnemyController(EnemyController enemyController)
+        {
+            PooledEnemy pooledEnemy = enemys.Find(item => item.enemyController == enemyController);
+            pooledEnemy.isUsed = false;
+        }
+
+        private EnemyController CreatePooledEnemy()
+        {
+            PooledEnemy pooledEnemy = new PooledEnemy();
+            pooledEnemy.enemyController = new EnemyController(enemyView, scriptableObject.enemyData);
+            pooledEnemy.isUsed = true;
+            enemys.Add(pooledEnemy);
+            return pooledEnemy.enemyController;
+        }
     }
 }
+

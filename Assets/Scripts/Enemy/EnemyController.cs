@@ -2,6 +2,7 @@ using UnityEngine;
 using CosmicCuration.Audio;
 using CosmicCuration.VFX;
 using CosmicCuration.Player;
+using CosmicCuration.Bullets;
 
 namespace CosmicCuration.Enemy
 {
@@ -27,6 +28,7 @@ namespace CosmicCuration.Enemy
 
         public void Configure(Vector3 positionToSet, EnemyOrientation enemyOrientation)
         {
+            enemyView.gameObject.SetActive(true);
             enemyView.transform.position = positionToSet;
             SetEnemyOrientation(enemyOrientation);
             
@@ -107,8 +109,10 @@ namespace CosmicCuration.Enemy
             GameService.Instance.GetUIService().IncrementScore(enemyData.scoreToGrant);
             GameService.Instance.GetSoundService().PlaySoundEffects(SoundType.EnemyDeath);
             GameService.Instance.GetVFXService().PlayVFXAtPosition(VFXType.EnemyExplosion, enemyView.transform.position);
-            enemyView.gameObject.SetActive(false);
+            //Object.Destroy(enemyView.gameObject);
+
             GameService.Instance.GetEnemyService().ReturnEnemyToPool(this);
+            enemyView.gameObject.SetActive(false);
         }
 
         private enum EnemyState
