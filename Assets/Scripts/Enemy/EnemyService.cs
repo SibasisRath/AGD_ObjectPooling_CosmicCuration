@@ -60,7 +60,7 @@ namespace CosmicCuration.Enemy
         private void SpawnEnemyAtPosition(Vector2 spawnPosition, EnemyOrientation enemyOrientation)
         {
             // EnemyController spawnedEnemy = new EnemyController(enemyPrefab, enemyScriptableObject.enemyData);
-            EnemyController spawnedEnemy = enemyPool.GetEnemyController();
+            EnemyController spawnedEnemy = enemyPool.GetEnemy();
             spawnedEnemy.Configure(spawnPosition, enemyOrientation);
         }
 
@@ -108,7 +108,7 @@ namespace CosmicCuration.Enemy
 
         private void ResetSpawnTimer() => spawnTimer = currentSpawnRate;
 
-        public void ReturnEnemyToPool(EnemyController enemyController) => enemyPool.ReturnEnemyController(enemyController);
+        public void ReturnEnemyToPool(EnemyController enemyController) => enemyPool.ReturnItem(enemyController);
 
 
         public void SetEnemySpawning(bool setActive) => isSpawning = setActive;

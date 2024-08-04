@@ -9,30 +9,30 @@ namespace CosmicCuration.Utilities
     {
         private List<PooledItem<T>> pooledItems = new ();
 
-        protected T GetItem()
+        protected T GetItem<U>() where U : T
         {
             if (pooledItems.Count > 0)
             {
-                PooledItem<T> item = pooledItems.Find(item => !item.isUsed);
+                PooledItem<T> item = pooledItems.Find(item => !item.isUsed && item.item is U);
                 if (item != null)
                 {
                     item.isUsed = true;
                     return item.item;
                 }
             }
-            return CreatePooledItem();
+            return CreatePooledItem<U>();
         }
 
-        private T CreatePooledItem()
+        private T CreatePooledItem<U>() where U : T
         {
             PooledItem<T> newItem = new PooledItem<T>();
-            newItem.item = CreateItem();
+            newItem.item = CreateItem<U>();
             newItem.isUsed = true;
             pooledItems.Add(newItem);
             return newItem.item;
         }
 
-        protected virtual T CreateItem()
+        protected virtual T CreateItem<U>() where U : T
         {
             throw new NotImplementedException();
         }
