@@ -1,11 +1,12 @@
 using CosmicCuration.Bullets;
+using CosmicCuration.Utilities;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace CosmicCuration.Enemy
 {
-    public class EnemyPool
+    public class EnemyPool : GenericObjectPool<EnemyController>
     {
         private EnemyScriptableObject scriptableObject;
         private EnemyView enemyView;
