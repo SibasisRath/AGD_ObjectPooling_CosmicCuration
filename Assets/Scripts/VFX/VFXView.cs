@@ -1,5 +1,6 @@
-using System.Collections.Generic;
+
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace CosmicCuration.VFX
@@ -15,8 +16,8 @@ namespace CosmicCuration.VFX
 
         public void ConfigureAndPlay(VFXType type, Vector2 positionToSet)
         {
-            this.gameObject.SetActive(true);
-            this.gameObject.transform.position = positionToSet;
+            gameObject.SetActive(true);
+            gameObject.transform.position = positionToSet;
 
             foreach (VFXData item in particleSystemMap)
             {
@@ -38,9 +39,8 @@ namespace CosmicCuration.VFX
                 {
                     currentPlayingVFX.gameObject.SetActive(false);
                     currentPlayingVFX = null;
-                    this.gameObject.SetActive(false);
                     controller.OnParticleEffectCompleted();
-                   
+                    gameObject.SetActive(false);
                 }
             }
         }
